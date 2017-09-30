@@ -19,6 +19,8 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         
         timeLabel.text = String(startTimeLabel)
+        // TODO: Add startTimeLabel and stopTimeLabel
+        
         stopButton.isEnabled = false
     }
 
@@ -30,7 +32,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
-    @IBOutlet weak var resetButton: UIButton!
+    // TODO: Add Save button
     
     @IBAction func startTimer(_ sender: AnyObject) {
         if (isPlaying) {
@@ -54,16 +56,8 @@ class ViewController: UIViewController {
         isPlaying = false
     }
     
-    @IBAction func resetTimer(_ sender: AnyObject) {
-        startButton.isEnabled = true
-        stopButton.isEnabled = false
-        
-        timer.invalidate()
-        isPlaying = false
-        timeLabel.text = String(startTimeLabel)
-    }
-    
     @objc func UpdateTimer() {
+
         let currentTime = Date.timeIntervalSinceReferenceDate
         
         // Find the difference between current time and start time.
