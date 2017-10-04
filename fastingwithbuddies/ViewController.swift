@@ -95,9 +95,15 @@ class ViewController: UIViewController {
         let goalDate = currentDate.addingTimeInterval(16.0 * 3600.0)
         let goalHours = calendar.component(.hour, from: goalDate)
         
+        // TODO: Add AM/PM format
+        
+        // Add leading zeros
+        let strCurrentHours = currentHours < 10 ? "0\(currentHours)" : "\(currentHours)"
+        let strCurrentMinutes = currentMinutes < 10 ? "0\(currentMinutes)" : "\(currentMinutes)"
+        let strGoalHours = goalHours < 10 ? "0\(goalHours)" : "\(goalHours)"
+        
         // Update labels
-        startTimeLabel.text = "\(currentHours):\(currentMinutes)"
-        goalTimeLabel.text = "\(goalHours):\(currentMinutes)" // Minutes won't change if fasting time is defaulted to 16hrs
+        startTimeLabel.text = "\(strCurrentHours):\(strCurrentMinutes)"
+        goalTimeLabel.text = "\(strGoalHours):\(strCurrentMinutes)" // Minutes won't change if fasting time is defaulted to 16hrs
     }
 }
-
