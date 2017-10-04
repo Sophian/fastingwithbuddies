@@ -9,7 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController {
-    var startTimeLabel = "00:00:00"
+    var timerStartLabel = "00:00:00"
     var startTime = TimeInterval()
     var timer = Timer()
     var isPlaying = false
@@ -18,7 +18,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        timeLabel.text = String(startTimeLabel)
+        timerLabel.text = String(describing: timerStartLabel)
         // TODO: Add startTimeLabel and stopTimeLabel
         
         stopButton.isEnabled = false
@@ -29,9 +29,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var startButton: UIButton!
     @IBOutlet weak var stopButton: UIButton!
+    @IBOutlet weak var startTimeLabel: UILabel!
+    @IBOutlet weak var goalTimeLabel: UILabel!
     // TODO: Add Save button
     
     @IBAction func startTimer(_ sender: AnyObject) {
@@ -44,8 +46,9 @@ class ViewController: UIViewController {
         
         timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(UpdateTimer), userInfo: nil, repeats: true)
         isPlaying = true
-        
         startTime = Date.timeIntervalSinceReferenceDate
+        
+        UpdateStartAndEndTimeLabels()
     }
     
     @IBAction func stopTimer(_ sender: AnyObject) {
@@ -57,7 +60,6 @@ class ViewController: UIViewController {
     }
     
     @objc func UpdateTimer() {
-
         let currentTime = Date.timeIntervalSinceReferenceDate
         
         // Find the difference between current time and start time.
@@ -81,7 +83,21 @@ class ViewController: UIViewController {
         let strSeconds = String(format: "%02d", seconds)
         
         // Concatenate hours, minutes and seconds and assign it
-        timeLabel.text = "\(strHours):\(strMinutes):\(strSeconds)"
+        timerLabel.text = "\(strHours):\(strMinutes):\(strSeconds)"
+    }
+    
+    func UpdateStartAndEndTimeLabels() {
+        // Calculate goalTime
+        let currentDate = Date()
+        let calendar = Calendar.current
+        let currentHours = calendar.component(.hour, from: currentDate)
+        let currentMinutes = calendar.component(.minute, from: currentDate)
+        let goalDate = currentDate.addingTimeInterval(16.0 * 3600.0)
+        let goalHours = calendar.component(.hour, from: goalDate)
+        
+        // Update labels
+        startTimeLabel.text = "\(currentHours):\(currentMinutes)"
+        goalTimeLabel.text = "\(goalHours):\(currentMinutes)" // Minutes won't change if fasting time is defaulted to 16hrs
     }
 }
 
