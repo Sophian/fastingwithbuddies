@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class TimerViewController: UIViewController {
     var timerStartLabel = "00:00:00"
     var startTime = TimeInterval()
     var timer = Timer()
